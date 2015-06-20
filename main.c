@@ -1,6 +1,6 @@
 /********************************************************************************
-Magstripe Emulator 2.0 
-by Compton
+Magstripe Emulator and Penetration Tester 0.9
+by James Camden Martin
 ********************************************************************************/
 
 /********************************************************************************
@@ -517,6 +517,7 @@ int main(void) {
 	display_setCursor(0,1);
 	display_prints("1=Up 2=Dwn 3=Sav");
 
+//Debug code:
 //display_clear();
 //display_setCursor(0,0);
 
@@ -557,7 +558,7 @@ int main(void) {
 	millis_pause();
 	sei(); // Enable interrupts
 	
-	// main loop
+	//main loop, menu navigation handled here
 	while (true) {
 		int key;
 		switch(menustate){
