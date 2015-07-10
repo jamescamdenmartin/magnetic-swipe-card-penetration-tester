@@ -110,6 +110,12 @@
     <Compile Include="bruteforce.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="saveddata.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="saveddata.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="manualcodeentry.h">
       <SubType>compile</SubType>
     </Compile>
