@@ -1,19 +1,3 @@
-#include "globaldefinitions.h"
-
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdbool.h>
-#include <avr/eeprom.h>
-#include <stdio.h>
-#include <string.h>
-#include <avr/pgmspace.h>
-#include <util/delay.h>
-
-char magnetPolarity = 0; //direction of the last strip of magnet that was emulated
-char magnetbitbufferlength=0;
-char magnetbitbuffer[40*5]; //Track 2 has up to 40 5-bit characters
-char lrcbyte=0;
-
 /**************************************************************
 Magnetic Swipe Card Track 2 Emulator Code
 **************************************************************/
@@ -28,6 +12,21 @@ ISO standard track 2 data format:
 
 195 bits of data not counting the LRC
 */
+#include "globaldefinitions.h"
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdbool.h>
+#include <avr/eeprom.h>
+#include <stdio.h>
+#include <string.h>
+#include <avr/pgmspace.h>
+#include <util/delay.h>
+
+uint8_t magnetPolarity = 0; //direction of the last strip of magnet that was emulated
+uint8_t magnetbitbufferlength=0;
+char magnetbitbuffer[40*5]; //Track 2 has up to 40 5-bit characters
+char lrcbyte=0;
 
 //Physical output code for writing bits to the card reader
 //The reader detects the positions where a change in polarity occurs in a strip of magnets dragged across it

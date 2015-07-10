@@ -10,9 +10,8 @@ Millisecond timer
 #include <avr/pgmspace.h>
 #include <avr/power.h>
 #include <util/atomic.h>
+#include "globaldefinitions.h"
 #include "millis.h"
-
-#define F_CPU 12000000UL
 
 volatile long timer_millis;
 

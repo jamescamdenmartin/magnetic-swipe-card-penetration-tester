@@ -1,3 +1,6 @@
+#ifndef Millis_h
+#define Millis_h
+
 #define millis() millis_get()
 
 /**
@@ -44,3 +47,5 @@ void millis_add(long ms);
 * @return (none)
 */
 void millis_subtract(long ms);
+
+#endif

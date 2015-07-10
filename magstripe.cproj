@@ -107,6 +107,21 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="bruteforce.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="manualcodeentry.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="manualcodeentry.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="keypad.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="keypad.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="display.c">
       <SubType>compile</SubType>
     </Compile>
@@ -114,6 +129,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="globaldefinitions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="bruteforce.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="magnet.c">

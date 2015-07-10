@@ -1,3 +1,6 @@
+#ifndef GlobalDefinitions_h
+#define GlobalDefinitions_h
+
 //Macros for easier IO Pin handling
 #define _BSET(type,name,bit)            (type ## name  |= _BV(bit))
 #define _BCLEAR(type,name,bit)          (type ## name  &= ~ _BV(bit))
@@ -12,6 +15,7 @@
 #define LOW(pin)               _BCLEAR(PORT,pin)
 #define TOGGLE(pin)            _BTOGGLE(PORT,pin)
 #define READ(pin)              _BGET(PIN,pin)
+#define PUT(pin,val)           _BPUT(PORT,pin,val)
 
 //IO Pin definitions
 #define pinEMAGN C,2
@@ -32,7 +36,10 @@
 #define pinUnused11 B,5
 
 
-//Program constants, tweakable
+//Program constants, 
 #define F_CPU 12000000UL
 //swipe card clock speed in microseconds. Scanners can tolerate various "card swipe speeds" so just shoot for the average swipe speed
 #define swipeCardSpeed 750 
+//Keypad key debounce time in milliseconds
+#define keypad_debounce_time 25
+#endif

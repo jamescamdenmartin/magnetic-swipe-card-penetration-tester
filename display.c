@@ -1,6 +1,5 @@
-
-#define F_CPU 12000000UL
 #include "display.h"
+#include "globaldefinitions.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -12,7 +11,7 @@
 #include <util/delay.h>
 
 //Macros for easier IO Pin handling
-#define _BSET(type,name,bit)            (type ## name  |= _BV(bit))   
+/*#define _BSET(type,name,bit)            (type ## name  |= _BV(bit))   
 #define _BCLEAR(type,name,bit)          (type ## name  &= ~ _BV(bit))       
 #define _BTOGGLE(type,name,bit)         (type ## name  ^= _BV(bit))   
 #define _BGET(type,name,bit)            ((type ## name >> bit) &  1)
@@ -26,6 +25,7 @@
 #define TOGGLE(pin)            _BTOGGLE(PORT,pin)   
 #define READ(pin)              _BGET(PIN,pin)
 #define PUT(pin,val)           _BPUT(PORT,pin,val)
+*/
 
 #define _rs_pin D,6
 #define _rw_pin B,255
@@ -54,9 +54,6 @@
 //    I/D = 1; Increment by 1
 //    S = 0; No shift
 //
-// Note, however, that resetting the Arduino doesn't reset the LCD, so we
-// can't assume that its in that state when a sketch starts (and the
-// Display constructor is called).
 
 void display_init(uint8_t fourbitmode)
 {
@@ -101,9 +98,7 @@ void display_begin(uint8_t cols, uint8_t lines, uint8_t dotsize) {
     _displayfunction |= LCD_5x10DOTS;
   }
 
-  // SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
-  // according to datasheet, we need at least 40ms after power rises above 2.7V
-  // before sending display_commands. Arduino can turn on way befer 4.5V so we'll wait 50
+  // according to datasheet, we need at least 40ms after the input to the display rises above 2.7V
   _delay_us(50000);
   // Now we pull both RS and R/W low to begin display_commands
   LOW(_rs_pin);
