@@ -246,13 +246,14 @@ int main(void) {
 							menuPosition=0;
 							break;
 						case '3': //Go to the saved code shortcut menu
+							savedCodeShortcutMenu();
 							break;
 						case '#':
 							switch(menuPosition){
 								case 0:
 									manualCodeEntry();
 									break;
-								case 1:
+								case 1: //Edit saved codes
 									display_clear();
 									display_prints("Not Implemented");
 									_delay_ms(500);
@@ -260,6 +261,10 @@ int main(void) {
 								case 2:
 									wildcardBruteForce();
 									break;
+								case 3: //Brute force Max
+									display_clear();
+									display_prints("Not Implemented");
+									_delay_ms(500);
 								case 4:
 									menustate=DEBUGMENU;
 									menuPosition=0;

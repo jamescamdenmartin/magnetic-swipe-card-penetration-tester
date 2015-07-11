@@ -25,7 +25,7 @@ ISO standard track 2 data format:
 
 uint8_t magnetPolarity = 0; //direction of the last strip of magnet that was emulated
 uint8_t magnetbitbufferlength=0;
-char magnetbitbuffer[40*5]; //Track 2 has up to 40 5-bit characters
+char magnetbitbuffer[maxNumberOfCardCharacters*5]; //Track 2 has up to 40 5-bit characters
 char lrcbyte=0;
 
 //Physical output code for writing bits to the card reader

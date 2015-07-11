@@ -1,6 +1,8 @@
 #ifndef Magnet_h
 #define Magnet_h
 
+#define maxNumberOfCardCharacters 40;  //Track 2 has up to 40 5-bit characters
+
 /**
 * Write a bit to the electromagnet buffer.
 *
