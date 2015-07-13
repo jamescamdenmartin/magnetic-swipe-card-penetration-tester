@@ -1,18 +1,11 @@
 /***********************************************
 Millisecond timer
 ***********************************************/
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdbool.h>
-#include <avr/eeprom.h>
-#include <stdio.h>
-#include <string.h>
-#include <avr/pgmspace.h>
-#include <avr/power.h>
-#include <util/atomic.h>
-#include "globaldefinitions.h"
 #include "millis.h"
 
+#include "globaldefinitions.h"
+#include <avr/interrupt.h>
+#include <util/atomic.h>
 volatile long timer_millis;
 
 void millis_init(void)
@@ -31,7 +24,7 @@ void millis_init(void)
 	/*
 	* Compare match 1A interrupts.
 	*/
-	TIMSK |= _BV(OCIE1A);
+	TIMSK1 |= _BV(OCIE1A);
 
 	// enable interrupts
 	sei();
@@ -40,7 +33,7 @@ void millis_init(void)
 
 long millis_get()
 {
-	long millis_return;
+	volatile long millis_return;
 	
 	// Ensure this cannot be disrupted
 	ATOMIC_BLOCK(ATOMIC_FORCEON) {

@@ -1,8 +1,11 @@
-#include "savedcodemenu.c"
+#include "savedcodemenu.h"
+#include "globaldefinitions.h"
 #include "saveddata.h"
 #include "magnet.h"
 #include "display.h"
 #include "keypad.h"
+
+#include <util/delay.h>
 
 void savedCodeShortcutMenu(){
 	int menupos=0;
@@ -14,7 +17,7 @@ void savedCodeShortcutMenu(){
 	
 	while(1){
 			display_clear();
-			sprintf(menupostringbuffer, "%d)", menupos)
+			sprintf(menupostringbuffer, "%d)", menupos);
 			display_prints(menupostringbuffer);
 			display_printl(carddata, datalength, 1);
 			display_setCursor(0,1);
@@ -23,7 +26,7 @@ void savedCodeShortcutMenu(){
 			char key;
 			key=inputpoll(-1);
 			switch(key){
-				case '1': 
+				case '1':
 						if(menupos==0)
 							menupos==maxNumberOfCardCharacters-1;
 						else
@@ -58,8 +61,8 @@ void savedCodeShortcutMenu(){
 }
 
 void savedCodeEditor(){
-	int menupos=0;
-	while(1){
-	
-	}
+//	int menupos=0;
+//	while(1){
+//	
+//	}
 }

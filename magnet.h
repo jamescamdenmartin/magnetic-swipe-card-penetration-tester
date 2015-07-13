@@ -1,15 +1,8 @@
 #ifndef Magnet_h
 #define Magnet_h
 
-#define maxNumberOfCardCharacters 40;  //Track 2 has up to 40 5-bit characters
-
-/**
-* Write a bit to the electromagnet buffer.
-*
-* @param [bit] value to write to the current position of the buffer
-* @return (none)
-*/
-void writeBitToBuffer(uint8_t bit);
+#define maxNumberOfCardCharacters 40 
+//Track 2 has up to 40 5-bit characters
 
 /**
 * Write a Track 2 data character to the electromagnet buffer. This method calculates the parity and writes the correct bits.

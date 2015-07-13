@@ -11,12 +11,9 @@ Includes
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/eeprom.h>
-#include <avr/pgmspace.h>
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <util/delay.h>
 
@@ -28,6 +25,7 @@ Includes
 //Data entry modules
 #include "bruteforce.h"
 #include "manualcodeentry.h"
+#include "savedcodemenu.h"
 /********************************************************************************
 Macros and Defines
 ********************************************************************************/
@@ -64,37 +62,31 @@ void updateMenuDisplay(void){
 		switch(menuPosition){
 			case 0:
 			display_println("#=Manual Entry");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
 			break;
 			case 1:
 			display_println("#=EditSavedCodes");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
 			break;
 			case 2:
 			display_println("#=BruteForceWild");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
 			break;
 			case 3:
 			display_println("#=BruteForceMax");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
 			break;
 			case 4:
 			display_println("#=Debug Menu");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
 			break;
 			default:
-			display_clear();
-			display_println("Eror: StateUnknwn");
-			char textout[10];
-			display_setCursor(0,1);
-			itoa(menuPosition, textout, 10);
-			display_println(textout);
+				display_clear();
+				display_println("Eror: StateUnknwn");
+				char textout[10];
+				display_setCursor(0,1);
+				itoa(menuPosition, textout, 10);
+				display_println(textout);
+				return;
 			break;
+			
+			display_setCursor(0,1);
+			display_prints("1=Up 2=Dwn 3=Sav");
 		}
 		break;
 		case DEBUGMENU:

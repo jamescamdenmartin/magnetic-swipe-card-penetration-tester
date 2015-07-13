@@ -12,16 +12,12 @@ ISO standard track 2 data format:
 
 195 bits of data not counting the LRC
 */
+#include "magnet.h"
 #include "globaldefinitions.h"
 
 #include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdbool.h>
-#include <avr/eeprom.h>
-#include <stdio.h>
-#include <string.h>
-#include <avr/pgmspace.h>
 #include <util/delay.h>
+#include <inttypes.h>
 
 uint8_t magnetPolarity = 0; //direction of the last strip of magnet that was emulated
 uint8_t magnetbitbufferlength=0;
@@ -152,7 +148,7 @@ void calculateLRC(void){
   //}
 }
 
-void writeBitToBuffer(char paramBit)
+void writeBitToBuffer(uint8_t paramBit)
 {
 	magnetbitbuffer[magnetbitbufferlength]=paramBit;
 	magnetbitbufferlength++;
