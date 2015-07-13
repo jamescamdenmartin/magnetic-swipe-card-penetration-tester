@@ -347,9 +347,9 @@ void display_write8bits(uint8_t value) {
 /***************
 Writes out to a line, and fills the rest of it with blanks
 ***************/
-int display_println(const char *str)
+uint8_t display_println(const char *str)
 {
-	int i=0;
+	uint8_t i=0;
 	while(1){
 		if(str[i]==0)
 		break;
@@ -357,15 +357,15 @@ int display_println(const char *str)
 		i++;
 	}
 	if(i<_numcolumns)
-		for(int j=0;j<_numcolumns-i;j++){
+		for(uint8_t j=0;j<_numcolumns-i;j++){
 			display_write(' ');
 		}
 	return i;
 }
 
-int display_prints(const char *str)
+uint8_t display_prints(const char *str)
 {
-	int i=0;
+	uint8_t i=0;
 	while(1){
 		if(str[i]==0)
 			break;
@@ -377,10 +377,10 @@ int display_prints(const char *str)
 
 void display_printl(const char *str, uint8_t length, uint8_t clearrestofline)
 {
-	for(int i=0; i<length; i++)
+	for(uint8_t i=0; i<length; i++)
 		display_write(str[i]);
 	if(clearrestofline){
-		for(int j=0;j<_numcolumns-length;j++){
+		for(uint8_t j=0;j<_numcolumns-length;j++){
 			display_write(' ');
 		}
 	}

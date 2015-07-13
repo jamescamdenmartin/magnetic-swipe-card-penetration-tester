@@ -19,8 +19,8 @@ void wildcardBruteForceOutput(char *inputstring, int inputstringlength, int *wil
 	display_println("Backoff(ms): *->");
 
 	while(1){
-		int keyinput=inputpoll(-1);
-		if(keyinput==-1)
+		char keyinput=inputpoll(-1);
+		if(keyinput==':')
 		continue;
 		else if(keyinput=='#'){
 			if(backoffinputlength!=0){
@@ -117,11 +117,11 @@ void wildcardBruteForce(void){
 	display_println("*=wild #=submenu");
 	char userinput[37];
 	int userinputlength=0;
-	int keyinput=-1;
+	char keyinput=';';
 	while(1){
 		keyinput=inputpoll(-1);
-		if(keyinput==-1)
-		continue;
+		if(keyinput==';')
+			continue;
 		else if(keyinput=='#'){
 			display_setCursor(0,1);
 			display_println("*=next #=delete");

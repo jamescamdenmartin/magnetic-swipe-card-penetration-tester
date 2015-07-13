@@ -20,7 +20,7 @@ void saveCardData(char *inputcarddata, int inputlength, uint8_t positiontosaveto
 	  uint8_t bytetowrite=0;
 	  uint8_t dataoffset=0;
 	  //pack two characters into each byte before writing. Low bits even characters then high bits odd characters.
-	  for(int i=0;i<inputlength;i+=2){
+	  for(uint8_t i=0;i<inputlength;i+=2){
 		  switch(inputcarddata[i]){
 			  case '0': bytetowrite=0x0; break;
 			  case '1': bytetowrite=0x1; break;

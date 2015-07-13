@@ -50,7 +50,7 @@ Global Variables
 ********************************************************************************/
 enum menuState menustate = MAIN;
 char menuPosition=0;
-int testkeyinput=0;
+char testkeyinput=0;
 
 /********************************************************************************
 Writes to display based on current menu state
@@ -219,7 +219,7 @@ int main(void) {
 	
 	//main loop, menu navigation handled here
 	while (true) {
-		int key;
+		char key;
 		switch(menustate){
 			case MAIN:;
 					updateMenuDisplay();
@@ -246,9 +246,7 @@ int main(void) {
 									manualCodeEntry();
 									break;
 								case 1: //Edit saved codes
-									display_clear();
-									display_prints("Not Implemented");
-									_delay_ms(500);
+									savedCodeEditor();
 									break;
 								case 2:
 									wildcardBruteForce();
@@ -306,7 +304,7 @@ int main(void) {
 										display_setCursor(0,0);
 										display_prints("Outputting...");
 										resetMagnetBitBuffer();
-										for(int i=0;i<testcardlength;i++){
+										for(uint8_t i=0;i<testcardlength;i++){
 											writeCharToBuffer(testcarddata[i]);
 										}
 										writeOutEMagBitBuffer();

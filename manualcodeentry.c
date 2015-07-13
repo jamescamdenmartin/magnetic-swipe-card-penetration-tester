@@ -16,11 +16,11 @@ void manualCodeEntry(void){
 	display_setCursor(0,1);
 	display_println("*=del #=output");
 	char userinput[37];
-	int userinputlength=0;
-	int keyinput=-1;
+	uint8_t userinputlength=0;
+	char keyinput=-1;
 	while(1){
 		keyinput=inputpoll(-1);
-		if(keyinput==-1)
+		if(keyinput==';')
 		continue;
 		else if(keyinput=='*'){
 			if(userinputlength==0)//back to main menu
@@ -60,7 +60,7 @@ void manualCodeEntry(void){
 		if(userinputlength>16){
 			char text[17];
 			text[16]='\0';
-			for(int i=15;i>=0;i--){
+			for(uint8_t i=15;i>=0;i--){
 				text[15-i]=userinput[userinputlength-1-i];
 			}
 			display_setCursor(0,0);

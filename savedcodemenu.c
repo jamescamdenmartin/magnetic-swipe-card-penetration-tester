@@ -28,7 +28,7 @@ void savedCodeShortcutMenu(){
 			switch(key){
 				case '1':
 						if(menupos==0)
-							menupos==maxNumberOfCardCharacters-1;
+							menupos=maxNumberOfCardCharacters-1;
 						else
 							menupos-=1;
 							
@@ -36,7 +36,7 @@ void savedCodeShortcutMenu(){
 						break;
 				case '2':
 						if(menupos==maxNumberOfCardCharacters-1)
-							menupos==0;
+							menupos=0;
 						else
 							menupos+=1;
 							
@@ -47,7 +47,7 @@ void savedCodeShortcutMenu(){
 						display_setCursor(0,0);
 						display_prints("Outputting...");
 						resetMagnetBitBuffer();
-						for(int i=0;i<datalength;i++){
+						for(uint8_t i=0;i<datalength;i++){
 							writeCharToBuffer(carddata[i]);
 						}
 						writeOutEMagBitBuffer();

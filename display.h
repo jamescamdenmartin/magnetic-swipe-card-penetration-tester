@@ -81,8 +81,8 @@
   void display_write8bits(uint8_t);
   void display_pulseEnable();
   
-  int display_prints(const char *);
-  int display_println(const char *);
+  uint8_t display_prints(const char *);
+  uint8_t display_println(const char *);
   void display_printl(const char *, uint8_t length, uint8_t clearrestofline);
   
   uint8_t _displayfunction;

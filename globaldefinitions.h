@@ -1,6 +1,6 @@
 #ifndef GlobalDefinitions_h
 #define GlobalDefinitions_h
-
+#include <inttypes.h>
 //Macros for easier IO Pin handling
 #define _BSET(type,name,bit)            (type ## name  |= _BV(bit))
 #define _BCLEAR(type,name,bit)          (type ## name  &= ~ _BV(bit))

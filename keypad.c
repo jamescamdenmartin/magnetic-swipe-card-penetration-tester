@@ -5,7 +5,7 @@
 #include <util/delay.h>
 #include <avr/io.h>
 /********************************************************************************
-One pin analog keypad input. Halts execution until input or 'until' ms (if no input detected before until, returns -1)
+One pin analog keypad input. Halts execution until input or 'until' ms (if no input detected before until, returns ';')
 ********************************************************************************/
 int old_key_input=-1;
 int present_key_input=0;
@@ -82,7 +82,7 @@ char inputpoll(long until) {
 		}
 		
 		if(until!=-1 && millis()-start>until) //waited long enough, give up
-		return -1;
+			return ';';
 		_delay_us(250);
 	}
 }
