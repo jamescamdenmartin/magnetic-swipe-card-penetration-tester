@@ -19,7 +19,7 @@
 
 //IO Pin definitions
 #define pinEMAGN C,2
-#define pinEMAGS B,1
+#define pinEMAGS C,3
 #define testLED D,5
 
 //UNUSED IO PINS

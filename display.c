@@ -30,10 +30,10 @@
 #define _rs_pin D,6
 #define _rw_pin B,255
 #define _enable_pin D,7
-#define _d0_pin B,0
-#define _d1_pin B,2
-#define _d2_pin B,3
-#define _d3_pin B,4
+#define _d0_pin B,4
+#define _d1_pin B,3
+#define _d2_pin B,2
+#define _d3_pin B,0
 #define _d4_pin C,1
 #define _d5_pin C,1
 #define _d6_pin C,1

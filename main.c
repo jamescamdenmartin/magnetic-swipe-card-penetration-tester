@@ -59,77 +59,75 @@ void updateMenuDisplay(void){
 	display_setCursor(0,0);
 	switch(menustate){
 		case MAIN:
-		switch(menuPosition){
-			case 0:
-			display_println("#=Manual Entry");
-			break;
-			case 1:
-			display_println("#=EditSavedCodes");
-			break;
-			case 2:
-			display_println("#=BruteForceWild");
-			break;
-			case 3:
-			display_println("#=BruteForceMax");
-			break;
-			case 4:
-			display_println("#=Debug Menu");
-			break;
-			default:
+			switch(menuPosition){
+				case 0:
+				display_println("#=Manual Entry");
+				break;
+				case 1:
+				display_println("#=EditSavedCodes");
+				break;
+				case 2:
+				display_println("#=BruteForceWild");
+				break;
+				case 3:
+				display_println("#=BruteForceMax");
+				break;
+				case 4:
+				display_println("#=Debug Menu");
+				break;
+				default:
+					display_clear();
+					display_println("Eror: StateUnknwn");
+					char textout[10];
+					display_setCursor(0,1);
+					itoa(menuPosition, textout, 10);
+					display_println(textout);
+					return;
+				break;
+			}
+			display_setCursor(0,1);
+			display_prints("1=Up 2=Dwn 3=Sav");
+		break;
+		case DEBUGMENU:
+			switch(menuPosition){
+				case 0:
+				display_println("#=Output Test");
+				display_setCursor(0,1);
+				display_prints("1=Up 2=Dn 3=Back");
+				break;
+				case 1:
+				display_println("Blank");
+				display_setCursor(0,1);
+				display_prints("1=Up 2=Dn 3=Back");
+				break;
+				case 2:
+				display_println("Blank2");
+				display_setCursor(0,1);
+				display_prints("1=Up 2=Dn 3=Back");
+				break;
+				case 3:
+				display_println("Blank3");
+				display_setCursor(0,1);
+				display_prints("1=Up 2=Dn 3=Back");
+				break;
+				case 4:
+				display_println("Blank4");
+				display_setCursor(0,1);
+				display_prints("1=Up 2=Dn 3=Back");
+				break;
+				default:
 				display_clear();
 				display_println("Eror: StateUnknwn");
 				char textout[10];
 				display_setCursor(0,1);
 				itoa(menuPosition, textout, 10);
 				display_println(textout);
-				return;
-			break;
-			
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dwn 3=Sav");
-		}
-		break;
-		case DEBUGMENU:
-		switch(menuPosition){
-			case 0:
-			display_println("#=Output Test");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dn 3=Back");
-			break;
-			case 1:
-			display_println("Blank");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dn 3=Back");
-			break;
-			case 2:
-			display_println("Blank2");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dn 3=Back");
-			break;
-			case 3:
-			display_println("Blank3");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dn 3=Back");
-			break;
-			case 4:
-			display_println("Blank4");
-			display_setCursor(0,1);
-			display_prints("1=Up 2=Dn 3=Back");
-			break;
-			default:
-			display_clear();
-			display_println("Eror: StateUnknwn");
-			char textout[10];
-			display_setCursor(0,1);
-			itoa(menuPosition, textout, 10);
-			display_println(textout);
-			break;
-		}
+				break;
+			}
 		default:
 			display_println("Eror: UnkwnMenu");
 		break;
 	}
-
 }
 
 /********************************************************************************
@@ -179,8 +177,8 @@ int main(void) {
 //Debug code:
 //display_clear();
 //display_setCursor(0,0);
-
-	/*//Turn on ADC and set prescaler to 64. F_CPU/Prescaler needs to be >50khz and <200khz for atmega8
+/*
+	//Turn on ADC and set prescaler to 64. F_CPU/Prescaler needs to be >50khz and <200khz for atmega8
 	ADCSRA = (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1);
 	//Analog input pin select
 	ADMUX=0x05;
@@ -193,10 +191,10 @@ int main(void) {
 		char textout[10];
 		display_clear();
 		itoa(present_key_input, textout, 10);
-		display_print(textout);
+		display_prints(textout);
 		_delay_ms(500);
-	}
-*/
+	}*/
+
 
 /*while(1){
 	display_setCursor(0,0);
