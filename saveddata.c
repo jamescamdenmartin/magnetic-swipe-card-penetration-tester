@@ -17,27 +17,35 @@
 void saveCardData(char *inputcarddata, int inputlength, uint8_t positiontosaveto){
 	  if(positiontosaveto>25)return;//Only 0-25 are valid save slots
 	  
+	  
+	/*inputlength=5;
+	inputcarddata[0]='1';
+	inputcarddata[1]='2';
+	inputcarddata[2]='1';
+	inputcarddata[3]='2';
+	inputcarddata[4]='?';*/
+		  
 	  uint8_t bytetowrite=0;
 	  uint8_t dataoffset=0;
 	  //pack two characters into each byte before writing. Low bits even characters then high bits odd characters.
 	  for(uint8_t i=0;i<inputlength;i+=2){
 		  switch(inputcarddata[i]){
-			  case '0': bytetowrite=0x0; break;
-			  case '1': bytetowrite=0x1; break;
-			  case '2': bytetowrite=0x2; break;
-			  case '3': bytetowrite=0x3; break; 
-			  case '4': bytetowrite=0x4; break; 
-			  case '5':	bytetowrite=0x5; break;
-			  case '6':	bytetowrite=0x6; break;
-			  case '7': bytetowrite=0x7; break;
-			  case '8': bytetowrite=0x8; break;
-			  case '9': bytetowrite=0x9; break;
-			  case ':': bytetowrite=0xA; break;
-			  case ';': bytetowrite=0xB; break;
-			  case '<': bytetowrite=0xC; break;
-			  case '=': bytetowrite=0xD; break;
-			  case '>': bytetowrite=0xE; break;
-			  case '?': bytetowrite=0xF; break;
+			  case '0': bytetowrite=0x00; break;
+			  case '1': bytetowrite=0x01; break;
+			  case '2': bytetowrite=0x02; break;
+			  case '3': bytetowrite=0x03; break; 
+			  case '4': bytetowrite=0x04; break; 
+			  case '5':	bytetowrite=0x05; break;
+			  case '6':	bytetowrite=0x06; break;
+			  case '7': bytetowrite=0x07; break;
+			  case '8': bytetowrite=0x08; break;
+			  case '9': bytetowrite=0x09; break;
+			  case ':': bytetowrite=0x0A; break;
+			  case ';': bytetowrite=0x0B; break;
+			  case '<': bytetowrite=0x0C; break;
+			  case '=': bytetowrite=0x0D; break;
+			  case '>': bytetowrite=0x0E; break;
+			  case '?': bytetowrite=0x0F; break;
 			  default: break;
 			}
 			if(i+1<inputlength){
@@ -63,6 +71,10 @@ void saveCardData(char *inputcarddata, int inputlength, uint8_t positiontosaveto
 			eeprom_update_byte((uint8_t*)(positiontosaveto*20+dataoffset),(uint8_t)bytetowrite);
 			dataoffset+=1;
 		 }
+		 //Clear the bytes that weren't written to by the string
+		 for(uint8_t i=19;i>dataoffset-1;i--){
+			eeprom_update_byte((uint8_t*)(positiontosaveto*20+i),(uint8_t)0);			 
+		 }
 }
 
 uint8_t retrieveCardData(char *buffer, uint8_t positiontoreadfrom){
@@ -77,64 +89,67 @@ uint8_t retrieveCardData(char *buffer, uint8_t positiontoreadfrom){
 		  
 		  buffer[numberofcharacters]=tempbyte & 0x0F;
 		  switch(buffer[numberofcharacters]){
-			  case 0x0: buffer[numberofcharacters]='0';
-			  case 0x1: buffer[numberofcharacters]='1';
-			  case 0x2: buffer[numberofcharacters]='2';
-			  case 0x3: buffer[numberofcharacters]='3';
-			  case 0x4: buffer[numberofcharacters]='4';
-			  case 0x5: buffer[numberofcharacters]='5';
-			  case 0x6: buffer[numberofcharacters]='6';
-			  case 0x7: buffer[numberofcharacters]='7';
-			  case 0x8: buffer[numberofcharacters]='8';
-			  case 0x9: buffer[numberofcharacters]='9';
-			  case 0xA: buffer[numberofcharacters]=':';
-			  case 0xB: buffer[numberofcharacters]=';';
-			  case 0xC: buffer[numberofcharacters]='<';
-			  case 0xD: buffer[numberofcharacters]='=';
-			  case 0xE: buffer[numberofcharacters]='>';
-			  case 0xF: buffer[numberofcharacters]='?';
+			  case 0x0: buffer[numberofcharacters]='0'; break;
+			  case 0x1: buffer[numberofcharacters]='1'; break;
+			  case 0x2: buffer[numberofcharacters]='2'; break;
+			  case 0x3: buffer[numberofcharacters]='3'; break;
+			  case 0x4: buffer[numberofcharacters]='4'; break;
+			  case 0x5: buffer[numberofcharacters]='5'; break;
+			  case 0x6: buffer[numberofcharacters]='6'; break;
+			  case 0x7: buffer[numberofcharacters]='7'; break;
+			  case 0x8: buffer[numberofcharacters]='8'; break;
+			  case 0x9: buffer[numberofcharacters]='9'; break;
+			  case 0xA: buffer[numberofcharacters]=':'; break;
+			  case 0xB: buffer[numberofcharacters]=';'; break;
+			  case 0xC: buffer[numberofcharacters]='<'; break;
+			  case 0xD: buffer[numberofcharacters]='='; break;
+			  case 0xE: buffer[numberofcharacters]='>'; break;
+			  case 0xF: buffer[numberofcharacters]='?'; break;
 		  }
 
-		  //Check for the end sentinel
-		  if(buffer[dataoffset]=='?'){
-			numberofcharacters+=1;
+		  //Check for the end marker
+		  if(buffer[numberofcharacters]=='?'){
+			//Return everything except for the end marker, don't numberofcharacters+=1;
 			break;
 		  }else{
 			numberofcharacters+=1;
 		  }
 		  
-		  buffer[numberofcharacters]=tempbyte & 0xF0;
+		  buffer[numberofcharacters]=(tempbyte >> 4) & 0x0F;
 		  switch(buffer[numberofcharacters]){
-			  case 0x0: buffer[numberofcharacters]='0';
-			  case 0x1: buffer[numberofcharacters]='1';
-			  case 0x2: buffer[numberofcharacters]='2';
-			  case 0x3: buffer[numberofcharacters]='3';
-			  case 0x4: buffer[numberofcharacters]='4';
-			  case 0x5: buffer[numberofcharacters]='5';
-			  case 0x6: buffer[numberofcharacters]='6';
-			  case 0x7: buffer[numberofcharacters]='7';
-			  case 0x8: buffer[numberofcharacters]='8';
-			  case 0x9: buffer[numberofcharacters]='9';
-			  case 0xA: buffer[numberofcharacters]=':';
-			  case 0xB: buffer[numberofcharacters]=';';
-			  case 0xC: buffer[numberofcharacters]='<';
-			  case 0xD: buffer[numberofcharacters]='=';
-			  case 0xE: buffer[numberofcharacters]='>';
-			  case 0xF: buffer[numberofcharacters]='?';
+			  case 0x0: buffer[numberofcharacters]='0'; break;
+			  case 0x1: buffer[numberofcharacters]='1'; break;
+			  case 0x2: buffer[numberofcharacters]='2'; break;
+			  case 0x3: buffer[numberofcharacters]='3'; break;
+			  case 0x4: buffer[numberofcharacters]='4'; break;
+			  case 0x5: buffer[numberofcharacters]='5'; break;
+			  case 0x6: buffer[numberofcharacters]='6'; break;
+			  case 0x7: buffer[numberofcharacters]='7'; break;
+			  case 0x8: buffer[numberofcharacters]='8'; break;
+			  case 0x9: buffer[numberofcharacters]='9'; break;
+			  case 0xA: buffer[numberofcharacters]=':'; break;
+			  case 0xB: buffer[numberofcharacters]=';'; break;
+			  case 0xC: buffer[numberofcharacters]='<'; break;
+			  case 0xD: buffer[numberofcharacters]='='; break;
+			  case 0xE: buffer[numberofcharacters]='>'; break;
+			  case 0xF: buffer[numberofcharacters]='?'; break;
 		  }
 		  
-		  //Check for the end sentinel
-		  if(buffer[dataoffset+1]=='?'){
-			  numberofcharacters+=1;
+		  //Check for the end marker
+		  if(buffer[numberofcharacters]=='?'){
+			  //Return everything except for the end marker, don't numberofcharacters+=1;
 			  break;
 		  }else{
 			  numberofcharacters+=1;
 		  }
 		  
-		  //Check if we've reached the max number of characters
-		  if(numberofcharacters==39){
-			  break;
-		  }
+			//Check if we've reached the max number of characters
+			if(numberofcharacters==39){
+				//No end sentinel, data is either corrupt or the entry is empty.
+				//Return an empty save slot.
+				numberofcharacters=0;
+				break;
+			}
 		  
 		  dataoffset+=1;
 	  }
