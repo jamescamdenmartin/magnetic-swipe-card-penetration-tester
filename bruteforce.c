@@ -159,10 +159,16 @@ void wildcardBruteForce(void){
 			_delay_ms(100); //Delay so the user doesn't instantly trigger it again
 		}
 		else{
-			if(userinputlength<37){
-				userinput[userinputlength]=keyinput;
-				userinputlength++;
-				}else{
+			if(!inputIsTrack2Char(keyinput) && keyinput!='*'){
+					display_setCursor(0,1);
+					display_println("Invalid Track2 char");
+					_delay_ms(500);
+					display_println("*=del #=output");				
+			}
+			else if(userinputlength<37){
+					userinput[userinputlength]=keyinput;
+					userinputlength++;
+			}else{
 				display_setCursor(0,1);
 				display_println("At input limit");
 				_delay_ms(500);
