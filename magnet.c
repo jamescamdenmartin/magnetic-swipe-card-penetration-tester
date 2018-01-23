@@ -32,50 +32,50 @@ char lrcbyte=0;
 //N----SS--NN--SS----NN----S
 void writeEMagBit(char lowOrHigh)
 {
-	if(lowOrHigh == 1)
-	{
-		if(magnetPolarity == 0)
-		{
-			LOW(pinEMAGN);
-			HIGH(pinEMAGS);
-			_delay_us(swipeCardSpeed); //magpolarity=1 now
-			LOW(pinEMAGS);
-			HIGH(pinEMAGN);
-			_delay_us(swipeCardSpeed);//magpolarity=0 now
-		}
-		else
-		{
-			LOW(pinEMAGS);
-			HIGH(pinEMAGN);
-			_delay_us(swipeCardSpeed); //magpolarity=0 now
-			LOW(pinEMAGN);
-			HIGH(pinEMAGS);
-			_delay_us(swipeCardSpeed); //magpolarity=1 now
-		}
-	}
-	else
-	{
-		if(magnetPolarity == 0)
-		{
-			LOW(pinEMAGN);
-			HIGH(pinEMAGS);
-			_delay_us(swipeCardSpeed * 2);
-			magnetPolarity = 1;
-		}
-		else
-		{
-			LOW(pinEMAGS);
-			HIGH(pinEMAGN);
-			_delay_us(swipeCardSpeed * 2);
-			magnetPolarity = 0;
-		}
-	}
+    if(lowOrHigh == 1)
+    {
+        if(magnetPolarity == 0)
+        {
+            LOW(pinEMAGN);
+            HIGH(pinEMAGS);
+            _delay_us(swipeCardSpeed); //magpolarity=1 now
+            LOW(pinEMAGS);
+            HIGH(pinEMAGN);
+            _delay_us(swipeCardSpeed);//magpolarity=0 now
+        }
+        else
+        {
+            LOW(pinEMAGS);
+            HIGH(pinEMAGN);
+            _delay_us(swipeCardSpeed); //magpolarity=0 now
+            LOW(pinEMAGN);
+            HIGH(pinEMAGS);
+            _delay_us(swipeCardSpeed); //magpolarity=1 now
+        }
+    }
+    else
+    {
+        if(magnetPolarity == 0)
+        {
+            LOW(pinEMAGN);
+            HIGH(pinEMAGS);
+            _delay_us(swipeCardSpeed * 2);
+            magnetPolarity = 1;
+        }
+        else
+        {
+            LOW(pinEMAGS);
+            HIGH(pinEMAGN);
+            _delay_us(swipeCardSpeed * 2);
+            magnetPolarity = 0;
+        }
+    }
 }
 
 /*
 Calculating odd parity and LRC for the message 123:
-                  P 8 4 2 1     Hex Value Decimal Value
-              Less Parity Less Parity
+                P 8 4 2 1     Hex Value Decimal Value
+            Less Parity Less Parity
 Start Sentinel: B 0 1 0 1 1   B 11 (8+2+1)
                 1 0 0 0 0 1   1 1
                 2 0 0 0 1 0   2 2
@@ -90,68 +90,68 @@ column has a even number of one's in it. Enter a zero or one in the LCR position
 Next, calculate odd parity for the LCR character, in the horizontal direction.
 */
 void calculateLRC(void){
-  char bit8, bit4, bit2, bit1;
-  char numberofones=0;
-  
-  for(int i=3;i<magnetbitbufferlength;i+=5){
-    if(magnetbitbuffer[i]==1){
-      numberofones++;
+    char bit8, bit4, bit2, bit1;
+    char numberofones=0;
+
+    for(int i=3;i<magnetbitbufferlength;i+=5){
+        if(magnetbitbuffer[i]==1){
+            numberofones++;
+        }
     }
-  }
-  if(numberofones%2==0 || numberofones==0){//was an even number of ones in the column
-    bit8=0;
-  }else{//was an odd number of ones in the column, make even
-    bit8=1;
-  }
-  
-  numberofones=0;
-  for(int i=2;i<magnetbitbufferlength;i+=5){
-    if(magnetbitbuffer[i]==1){
-      numberofones++;
+    if(numberofones%2==0 || numberofones==0){//was an even number of ones in the column
+        bit8=0;
+    }else{//was an odd number of ones in the column, make even
+        bit8=1;
     }
-  }
-  if(numberofones%2==0 || numberofones==0){
-    bit4=0;
-  }else{
-    bit4=1;
-  }
-  
-  numberofones=0;
-  for(int i=1;i<magnetbitbufferlength;i+=5){
-    if(magnetbitbuffer[i]==1){
-      numberofones++;
+
+    numberofones=0;
+    for(int i=2;i<magnetbitbufferlength;i+=5){
+        if(magnetbitbuffer[i]==1){
+            numberofones++;
+        }
     }
-  }
-  if(numberofones%2==0 || numberofones==0){
-    bit2=0;
-  }else{
-    bit2=1;
-  }
-  
-  numberofones=0;
-  for(int i=0;i<magnetbitbufferlength;i+=5){
-    if(magnetbitbuffer[i]==1){
-      numberofones++;
+    if(numberofones%2==0 || numberofones==0){
+        bit4=0;
+    }else{
+        bit4=1;
     }
-  }
-  if(numberofones%2==0 || numberofones==0){
-    bit1=0;
-  }else{
-    bit1=1;
-  }
-  
-  lrcbyte=bit8*8 + bit4*4 + bit2*2 + bit1;
-  
-  //if(debugmode){
-  //  Serial.print("Calculated lrc: ");
-  //  Serial.println(lrcbyte);
-  //}
+
+    numberofones=0;
+    for(int i=1;i<magnetbitbufferlength;i+=5){
+        if(magnetbitbuffer[i]==1){
+            numberofones++;
+        }
+    }
+    if(numberofones%2==0 || numberofones==0){
+        bit2=0;
+    }else{
+        bit2=1;
+    }
+
+    numberofones=0;
+    for(int i=0;i<magnetbitbufferlength;i+=5){
+        if(magnetbitbuffer[i]==1){
+            numberofones++;
+        }
+    }
+    if(numberofones%2==0 || numberofones==0){
+        bit1=0;
+    }else{
+        bit1=1;
+    }
+
+    lrcbyte=bit8*8 + bit4*4 + bit2*2 + bit1;
+
+    //if(debugmode){
+    //  Serial.print("Calculated lrc: ");
+    //  Serial.println(lrcbyte);
+    //}
 }
 
-void writeBitToBuffer(uint8_t paramBit)
+void writeB2B(uint8_t paramBit)
 {
-	magnetbitbuffer[magnetbitbufferlength]=paramBit;
-	magnetbitbufferlength++;
+    magnetbitbuffer[magnetbitbufferlength]=paramBit;
+    magnetbitbufferlength++;
 }
 
 
@@ -159,12 +159,12 @@ void writeBitToBuffer(uint8_t paramBit)
 /*
 Track 2 contains this 5 bit data format
 
- ANSI/ISO BCD Data Format
+ANSI/ISO BCD Data Format
 ---------
 
- * Remember that b1 (bit #1) is the LSB (least significant bit)!
-  * The LSB is read FIRST!
-  * Hexadecimal conversions of the Data Bits are given in parenthesis (xH).
+* Remember that b1 (bit #1) is the LSB (least significant bit)!
+* The LSB is read FIRST!
+* Hexadecimal conversions of the Data Bits are given in parenthesis (xH).
 
         --Data Bits--   Parity
         b1  b2  b3  b4   b5    Character  Function
@@ -187,7 +187,7 @@ Track 2 contains this 5 bit data format
         1   1   1   1    1        ? (FH)    End Sentinel
 
 
-           ***** 16 Character 5-bit Set *****
+        ***** 16 Character 5-bit Set *****
                 10 Numeric Data Characters
                 3 Framing/Field Characters
                 
@@ -197,31 +197,31 @@ with the parity bit. The card data format Is "1, 2, 4, 8, parity".
 */
 void writeCharToBuffer(char charToWrite)
 {
-  switch(charToWrite){
-    case '0': writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); break;
-    case '1': writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); break;
-    case '2': writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); break;    
-    case '3': writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); break; 
-    case '4': writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); break;
-    case '5': writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); break;    
-    case '6': writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); break;
-    case '7': writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); break;
-    case '8': writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); break;
-    case '9': writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); break;
-    case ':': writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); break;
-    case ';': writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(0); break;
-    case '<': writeBitToBuffer(0); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); break;
-    case '=': writeBitToBuffer(1); writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); break;   
-    case '>': writeBitToBuffer(0); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(0); break;   
-    case '?': writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); writeBitToBuffer(1); break;   
+    switch(charToWrite){
+    case '0': writeB2B(0); writeB2B(0); writeB2B(0); writeB2B(0); writeB2B(1); break;
+    case '1': writeB2B(1); writeB2B(0); writeB2B(0); writeB2B(0); writeB2B(0); break;
+    case '2': writeB2B(0); writeB2B(1); writeB2B(0); writeB2B(0); writeB2B(0); break;    
+    case '3': writeB2B(1); writeB2B(1); writeB2B(0); writeB2B(0); writeB2B(1); break; 
+    case '4': writeB2B(0); writeB2B(0); writeB2B(1); writeB2B(0); writeB2B(0); break;
+    case '5': writeB2B(1); writeB2B(0); writeB2B(1); writeB2B(0); writeB2B(1); break;    
+    case '6': writeB2B(0); writeB2B(1); writeB2B(1); writeB2B(0); writeB2B(1); break;
+    case '7': writeB2B(1); writeB2B(1); writeB2B(1); writeB2B(0); writeB2B(0); break;
+    case '8': writeB2B(0); writeB2B(0); writeB2B(0); writeB2B(1); writeB2B(0); break;
+    case '9': writeB2B(1); writeB2B(0); writeB2B(0); writeB2B(1); writeB2B(1); break;
+    case ':': writeB2B(0); writeB2B(1); writeB2B(0); writeB2B(1); writeB2B(1); break;
+    case ';': writeB2B(1); writeB2B(1); writeB2B(0); writeB2B(1); writeB2B(0); break;
+    case '<': writeB2B(0); writeB2B(0); writeB2B(1); writeB2B(1); writeB2B(1); break;
+    case '=': writeB2B(1); writeB2B(0); writeB2B(1); writeB2B(1); writeB2B(0); break;   
+    case '>': writeB2B(0); writeB2B(1); writeB2B(1); writeB2B(1); writeB2B(0); break;   
+    case '?': writeB2B(1); writeB2B(1); writeB2B(1); writeB2B(1); writeB2B(1); break;   
     default: /*if(debugmode){Serial.print("Tried to write an invalid character to the bit buffer: "); Serial.println(charToWrite);}*/ break;
-  }
+    }
 }
 
 //Writes the LRC out to the electromagnet now
 void writeLRC(void)
 {
-  switch(lrcbyte){
+    switch(lrcbyte){
     case 0: writeEMagBit(0); writeEMagBit(0); writeEMagBit(0); writeEMagBit(0); writeEMagBit(1); break;
     case 1: writeEMagBit(1); writeEMagBit(0); writeEMagBit(0); writeEMagBit(0); writeEMagBit(0); break;
     case 2: writeEMagBit(0); writeEMagBit(1); writeEMagBit(0); writeEMagBit(0); writeEMagBit(0); break;    
@@ -239,48 +239,48 @@ void writeLRC(void)
     case 14: writeEMagBit(0); writeEMagBit(1); writeEMagBit(1); writeEMagBit(1); writeEMagBit(0); break;   
     case 15: writeEMagBit(1); writeEMagBit(1); writeEMagBit(1); writeEMagBit(1); writeEMagBit(1); break; 
     default: /*if(debugmode){Serial.print("LRC calculation broken, got an invalid value: "); Serial.println(lrcbyte);}*/ break;  
-  }
+    }
 }
 
 //Call to write out the bit buffer contents to a card reader over the electromagnet
 void writeOutEMagBitBuffer(){
-	//if(debugmode){
-	//	Serial.println("Attempting to write data over electromagnet");
-	//}
-	
-	//Calculate the LRC from the bit buffer data
-	calculateLRC();
-	//The card reader clock syncs up with 0 bit pulses until the sentinel bit is sent. Number can vvaryery, 22 is the minimum set in the standard.
-	for(int i = 0; i < 22; i ++)
-	{
-		writeEMagBit(0);
-	}
-	//Write out the actual card data
-	for(int i=0;i<magnetbitbufferlength;i++){
-		writeEMagBit(magnetbitbuffer[i]);
-	}
-	//Write out the calculated Longitudinal Redundancy Check
-	writeLRC();
-	//Cards contain clocking bits on the end too, in case of reverse swiping
-	for(int i = 0; i < 22; i ++)
-	{
-		writeEMagBit(0);
-	}
-	
-	
-	 //Turn off the electromagnet
-	LOW(pinEMAGN);
-	LOW(pinEMAGS);
-	
-	//if(debugmode){
-	//	Serial.println("Write attempt finished");
-	//}
+    //if(debugmode){
+    //	Serial.println("Attempting to write data over electromagnet");
+    //}
+    
+    //Calculate the LRC from the bit buffer data
+    calculateLRC();
+    //The card reader clock syncs up with 0 bit pulses until the sentinel bit is sent. Number can vvaryery, 22 is the minimum set in the standard.
+    for(int i = 0; i < 22; i ++)
+    {
+        writeEMagBit(0);
+    }
+    //Write out the actual card data
+    for(int i=0;i<magnetbitbufferlength;i++){
+        writeEMagBit(magnetbitbuffer[i]);
+    }
+    //Write out the calculated Longitudinal Redundancy Check
+    writeLRC();
+    //Cards contain clocking bits on the end too, in case of reverse swiping
+    for(int i = 0; i < 22; i ++)
+    {
+        writeEMagBit(0);
+    }
+    
+    
+    //Turn off the electromagnet
+    LOW(pinEMAGN);
+    LOW(pinEMAGS);
+    
+    //if(debugmode){
+    //	Serial.println("Write attempt finished");
+    //}
 }
 
 void resetMagnetBitBuffer(){
-	for(int i=0;i<magnetbitbufferlength;i++){
-		magnetbitbuffer[i]=0;
-	}
-	magnetbitbufferlength=0;
-	lrcbyte=0;
+    for(int i=0;i<magnetbitbufferlength;i++){
+        magnetbitbuffer[i]=0;
+    }
+    magnetbitbufferlength=0;
+    lrcbyte=0;
 }
